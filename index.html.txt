@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krštenje - Digitalna Pozivnica</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
+    overflow-x:hidden;
+    color:#6b4b57;
+    text-align:center;
+}
+
+.hero {
+    padding:100px 20px 60px;
+    animation: fadeIn 2s ease;
+}
+
+h1 {
+    font-family:'Playfair Display', serif;
+    font-size:48px;
+    margin:0;
+}
+
+h2 {
+    font-weight:300;
+    margin-top:10px;
+}
+
+.section {
+    padding:50px 20px;
+}
+
+.card {
+    background:white;
+    max-width:500px;
+    margin:auto;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.info {
+    margin:15px 0;
+    font-size:18px;
+}
+
+button {
+    background:#f4a6b8;
+    border:none;
+    color:white;
+    padding:15px 35px;
+    border-radius:30px;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover {
+    background:#e98ca3;
+}
+
+form {
+    display:none;
+    margin-top:20px;
+}
+
+input, select {
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border-radius:12px;
+    border:1px solid #f4c2cf;
+}
+
+.footer {
+    padding:40px 20px;
+    font-size:14px;
+    opacity:0.8;
+}
+
+/* Floating hearts */
+.heart {
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation: floatUp 10s linear infinite;
+    opacity:0.4;
+}
+
+@keyframes floatUp {
+    0% { transform:translateY(0); }
+    100% { transform:translateY(-110vh); }
+}
+
+@keyframes fadeIn {
+    from {opacity:0;}
+    to {opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Muzika (opciono – ubaci link do mp3 fajla) -->
+<audio autoplay loop>
+  <source src="MUZIKA.mp3" type="audio/mpeg">
+</audio>
+
+<div class="hero">
+    <h2>Sa radošću Vas pozivamo na krštenje naše male princeze</h2>
+    <h1>TEODORA</h1>
+</div>
+
+<div class="section">
+<div class="card">
+    <div class="info">⛪ Hram Svetog Nikole</div>
+    <div class="info">📅 12. Jun 2026.</div>
+    <div class="info">🕊 11:00 časova</div>
+    <div class="info">🍽 Restoran Bella Vista</div>
+
+    <br>
+    <button onclick="showForm()">Potvrdite dolazak</button>
+
+    <form action="https://formspree.io/f/YOUR_ID" method="POST">
+        <input type="text" name="ime" placeholder="Ime i prezime" required>
+
+        <select name="dolazak" required>
+            <option value="">Da li dolazite?</option>
+            <option value="Da">Da</option>
+            <option value="Ne">Ne</option>
+        </select>
+
+        <input type="number" name="broj_gostiju" placeholder="Broj osoba">
+
+        <button type="submit">Pošalji potvrdu</button>
+    </form>
+
+</div>
+</div>
+
+<div class="footer">
+Radujemo se Vašem dolasku 🤍
+</div>
+
+<script>
+function showForm(){
+    document.querySelector("form").style.display="block";
+}
+
+/* Generisanje plutajućih srca */
+for(let i=0;i<15;i++){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="🤍";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(6+Math.random()*5)+"s";
+    heart.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(heart);
+}
+</script>
+
+</body>
+</html>
