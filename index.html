@@ -3,167 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Krštenje - Digitalna Pozivnica</title>
+<title>Klara - Krštenje</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
-body {
-    margin:0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to bottom, #fff0f5, #ffe4ec);
-    overflow-x:hidden;
-    color:#6b4b57;
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#f6e9ee;
+    overflow:hidden;
+}
+
+/* ENVELOPE SCREEN */
+
+.envelope-screen{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:#f6e9ee;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:10;
+}
+
+.envelope{
+    width:300px;
+    height:200px;
+    position:relative;
+    cursor:pointer;
+    perspective:1000px;
+}
+
+.envelope-body{
+    width:100%;
+    height:100%;
+    background:#fff;
+    border-radius:8px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.1);
+    position:absolute;
+}
+
+.flap{
+    width:100%;
+    height:100px;
+    background:#f3dce3;
+    position:absolute;
+    top:0;
+    left:0;
+    transform-origin:top;
+    transition:1s;
+    border-top-left-radius:8px;
+    border-top-right-radius:8px;
+}
+
+.open .flap{
+    transform:rotateX(-180deg);
+}
+
+.open .envelope-body{
+    animation:fadeOut 1.5s forwards 0.5s;
+}
+
+@keyframes fadeOut{
+    to{opacity:0;transform:translateY(-100px);}
+}
+
+/* MAIN CONTENT */
+
+.main{
+    opacity:0;
+    transition:1.5s;
+    height:100vh;
+    overflow-y:auto;
     text-align:center;
+    padding:80px 20px;
 }
 
-.hero {
-    padding:100px 20px 60px;
-    animation: fadeIn 2s ease;
+.show{
+    opacity:1;
 }
 
-h1 {
-    font-family:'Playfair Display', serif;
+h1{
+    font-family:'Playfair Display',serif;
     font-size:48px;
-    margin:0;
+    font-weight:600;
+    margin-bottom:20px;
 }
 
-h2 {
-    font-weight:300;
-    margin-top:10px;
+.subtitle{
+    font-style:italic;
+    margin-bottom:60px;
 }
 
-.section {
-    padding:50px 20px;
-}
-
-.card {
-    background:white;
-    max-width:500px;
-    margin:auto;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.08);
-}
-
-.info {
-    margin:15px 0;
+.section{
+    max-width:700px;
+    margin:60px auto;
+    line-height:1.8;
     font-size:18px;
 }
 
-button {
-    background:#f4a6b8;
-    border:none;
-    color:white;
-    padding:15px 35px;
-    border-radius:30px;
-    font-size:16px;
+.date{
+    font-family:'Playfair Display',serif;
+    font-size:24px;
+    margin:30px 0;
+}
+
+.signature{
+    margin-top:30px;
+    font-style:italic;
+}
+
+.line{
+    width:60px;
+    height:1px;
+    background:#caa5b3;
+    margin:40px auto;
+}
+
+button{
+    margin-top:40px;
+    padding:14px 40px;
+    background:transparent;
+    border:1px solid #caa5b3;
+    font-size:14px;
+    letter-spacing:2px;
     cursor:pointer;
     transition:0.3s;
 }
 
-button:hover {
-    background:#e98ca3;
+button:hover{
+    background:#caa5b3;
+    color:white;
 }
 
-form {
-    display:none;
-    margin-top:20px;
-}
+/* RSVP MODAL */
 
-input, select {
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border-radius:12px;
-    border:1px solid #f4c2cf;
-}
-
-.footer {
-    padding:40px 20px;
-    font-size:14px;
-    opacity:0.8;
-}
-
-/* Floating hearts */
-.heart {
+.modal{
     position:fixed;
-    bottom:-20px;
-    font-size:20px;
-    animation: floatUp 10s linear infinite;
-    opacity:0.4;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:rgba(0,0,0,0.4);
+    display:none;
+    justify-content:center;
+    align-items:center;
 }
 
-@keyframes floatUp {
-    0% { transform:translateY(0); }
-    100% { transform:translateY(-110vh); }
+.modal-content{
+    background:white;
+    padding:40px;
+    width:90%;
+    max-width:400px;
+    text-align:center;
+    border-radius:8px;
 }
 
-@keyframes fadeIn {
-    from {opacity:0;}
-    to {opacity:1;}
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ddd;
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- Muzika (opciono – ubaci link do mp3 fajla) -->
-<audio autoplay loop>
-  <source src="MUZIKA.mp3" type="audio/mpeg">
-</audio>
-
-<div class="hero">
-    <h2>Sa radošću Vas pozivamo na krštenje naše male princeze</h2>
-    <h1>TEODORA</h1>
+<div class="envelope-screen">
+    <div class="envelope" onclick="openEnvelope()">
+        <div class="flap"></div>
+        <div class="envelope-body"></div>
+    </div>
 </div>
 
-<div class="section">
-<div class="card">
-    <div class="info">⛪ Hram Svetog Nikole</div>
-    <div class="info">📅 12. Jun 2026.</div>
-    <div class="info">🕊 11:00 časova</div>
-    <div class="info">🍽 Restoran Bella Vista</div>
+<div class="main" id="mainContent">
 
-    <br>
-    <button onclick="showForm()">Potvrdite dolazak</button>
+    <h1>Ja sam mala Klara</h1>
+    <div class="subtitle">5 godina imam, vreme mi je da se krstim i malo uživam.</div>
 
-    <form action="https://formspree.io/f/YOUR_ID" method="POST">
-        <input type="text" name="ime" placeholder="Ime i prezime" required>
+    <div class="section">
+        Volim kad mi neko dođe, najviše sam rada  
+        i zato vas na Krštenje ja pozivam sada.
 
-        <select name="dolazak" required>
-            <option value="">Da li dolazite?</option>
-            <option value="Da">Da</option>
-            <option value="Ne">Ne</option>
-        </select>
+        <div class="date">18. jul 2026.</div>
 
-        <input type="number" name="broj_gostiju" placeholder="Broj osoba">
+        radujem se vašem društvu.
 
-        <button type="submit">Pošalji potvrdu</button>
-    </form>
+        <div class="signature">Vaša mala Klara</div>
+    </div>
+
+    <div class="line"></div>
+
+    <div class="section">
+        Krštenje će biti u crkvi Presvete Bogorodice u Burovcu u 11:00h.<br><br>
+        Slavlje počinje u 15:00h u M-Event sali<br>
+        (Kneza Miloša 134) u Bobovu.
+    </div>
+
+    <div class="line"></div>
+
+    <div class="section">
+        Molimo vas da nam najkasnije do <strong>04. jula 2026.</strong><br>
+        potvrdite svoj dolazak.
+        <br>
+        <button onclick="openModal()">POTVRDI DOLAZAK</button>
+    </div>
 
 </div>
-</div>
 
-<div class="footer">
-Radujemo se Vašem dolasku 🤍
+<div class="modal" id="rsvpModal">
+    <div class="modal-content">
+        <h3>Potvrdite dolazak</h3>
+        <form action="https://formspree.io/f/yourID" method="POST">
+            <input type="text" name="ime" placeholder="Vaše ime" required>
+            <input type="number" name="broj_gostiju" placeholder="Broj gostiju" required>
+            <button type="submit">Pošalji</button>
+        </form>
+    </div>
 </div>
 
 <script>
-function showForm(){
-    document.querySelector("form").style.display="block";
+
+function openEnvelope(){
+    document.querySelector('.envelope').classList.add('open');
+    setTimeout(()=>{
+        document.querySelector('.envelope-screen').style.display='none';
+        document.getElementById('mainContent').classList.add('show');
+        document.body.style.overflow='auto';
+    },1500);
 }
 
-/* Generisanje plutajućih srca */
-for(let i=0;i<15;i++){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="🤍";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.animationDuration=(6+Math.random()*5)+"s";
-    heart.style.fontSize=(15+Math.random()*20)+"px";
-    document.body.appendChild(heart);
+function openModal(){
+    document.getElementById('rsvpModal').style.display='flex';
 }
+
+window.onclick=function(e){
+    if(e.target==document.getElementById('rsvpModal')){
+        document.getElementById('rsvpModal').style.display='none';
+    }
+}
+
 </script>
 
 </body>
